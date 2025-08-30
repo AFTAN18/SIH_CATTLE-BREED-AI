@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,9 +25,11 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [stats] = useState({
     todayCount: 12,
@@ -78,10 +81,10 @@ const Dashboard = () => {
   ];
 
   const achievements = [
-    { id: 1, title: 'First Capture', description: 'Captured your first animal', icon: '🎯', unlocked: true },
-    { id: 2, title: 'Accuracy Master', description: 'Achieved 95%+ accuracy', icon: '🏆', unlocked: true },
-    { id: 3, title: 'Weekly Goal', description: 'Met weekly target', icon: '⭐', unlocked: true },
-    { id: 4, title: 'Expert Level', description: '1000+ registrations', icon: '👑', unlocked: false },
+    { id: 1, title: t('dashboard.achievements.firstCapture.title'), description: t('dashboard.achievements.firstCapture.description'), icon: '🎯', unlocked: true },
+    { id: 2, title: t('dashboard.achievements.accuracyMaster.title'), description: t('dashboard.achievements.accuracyMaster.description'), icon: '🏆', unlocked: true },
+    { id: 3, title: t('dashboard.achievements.weeklyGoal.title'), description: t('dashboard.achievements.weeklyGoal.description'), icon: '⭐', unlocked: true },
+    { id: 4, title: t('dashboard.achievements.expertLevel.title'), description: t('dashboard.achievements.expertLevel.description'), icon: '👑', unlocked: false },
   ];
 
   const containerVariants = {
@@ -133,7 +136,7 @@ const Dashboard = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Welcome Back!
+              {t('dashboard.welcomeBack')}
             </motion.h1>
             <motion.p 
               className="text-primary-foreground/80 text-lg"
@@ -141,24 +144,25 @@ const Dashboard = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Ready to identify more breeds?
+              {t('dashboard.readyToIdentify')}
             </motion.p>
           </div>
           <motion.div 
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
+            <LanguageSelector variant="dropdown" className="text-primary-foreground" />
             {isOnline ? (
               <Badge variant="secondary" className="bg-success text-success-foreground animate-bounce-gentle">
                 <Wifi className="w-4 h-4 mr-1" />
-                Online
+                {t('common.online')}
               </Badge>
             ) : (
               <Badge variant="destructive">
                 <WifiOff className="w-4 h-4 mr-1" />
-                Offline
+                {t('common.offline')}
               </Badge>
             )}
           </motion.div>
@@ -180,7 +184,7 @@ const Dashboard = () => {
             size="lg"
           >
             <Camera className="w-8 h-8 mr-3" />
-            Identify New Breed
+            {t('dashboard.identifyNewBreed')}
           </Button>
         </motion.div>
       </motion.div>
@@ -192,15 +196,15 @@ const Dashboard = () => {
           variants={itemVariants}
         >
           <BarChart3 className="w-6 h-6 text-primary" />
-          Your Statistics
+          {t('dashboard.yourStatistics')}
         </motion.h2>
         
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: Calendar, value: stats.todayCount, label: 'Today', color: 'text-primary' },
-            { icon: TrendingUp, value: stats.weekCount, label: 'This Week', color: 'text-accent' },
-            { icon: Award, value: `${stats.accuracyScore}%`, label: 'Accuracy', color: 'text-success' },
-            { icon: Target, value: stats.streak, label: 'Day Streak', color: 'text-warning' }
+            { icon: Calendar, value: stats.todayCount, label: t('dashboard.today'), color: 'text-primary' },
+            { icon: TrendingUp, value: stats.weekCount, label: t('dashboard.thisWeek'), color: 'text-accent' },
+            { icon: Award, value: `${stats.accuracyScore}%`, label: t('dashboard.accuracy'), color: 'text-success' },
+            { icon: Target, value: stats.streak, label: t('dashboard.dayStreak'), color: 'text-warning' }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -225,13 +229,13 @@ const Dashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-primary" />
-                Monthly Progress
+                {t('dashboard.monthlyProgress')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
-                  <span>Registrations: {stats.monthCount}/{stats.weeklyGoal}</span>
+                  <span>{t('dashboard.registrations')}: {stats.monthCount}/{stats.weeklyGoal}</span>
                   <span>{Math.round((stats.monthCount / stats.weeklyGoal) * 100)}%</span>
                 </div>
                 <Progress 
@@ -239,7 +243,7 @@ const Dashboard = () => {
                   className="h-3 bg-muted"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Great progress! You're {stats.weeklyGoal - stats.monthCount} registrations away from your monthly goal.
+                  {t('dashboard.greatProgress', { remaining: stats.weeklyGoal - stats.monthCount })}
                 </p>
               </div>
             </CardContent>
@@ -252,7 +256,7 @@ const Dashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-primary" />
-                Weekly Performance
+                {t('dashboard.weeklyPerformance')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -289,7 +293,7 @@ const Dashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <History className="w-5 h-5 text-primary" />
-                Recent Registrations
+                {t('dashboard.recentRegistrations')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -315,7 +319,7 @@ const Dashboard = () => {
                     {item.verified && (
                       <Badge variant="outline" className="text-success border-success">
                         <Star className="w-3 h-3 mr-1" />
-                        Verified
+                        {t('common.verified')}
                       </Badge>
                     )}
                   </div>
@@ -323,7 +327,7 @@ const Dashboard = () => {
               ))}
               
               <Button variant="outline" className="w-full">
-                View All History
+                {t('dashboard.viewAllHistory')}
               </Button>
             </CardContent>
           </Card>
@@ -335,7 +339,7 @@ const Dashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" />
-                Achievements
+                {t('dashboard.achievements')}
               </CardTitle>
             </CardHeader>
             <CardContent>

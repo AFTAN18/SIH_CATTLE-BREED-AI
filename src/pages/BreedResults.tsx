@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,10 +18,12 @@ import {
   Eye
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const BreedResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [selectedBreed, setSelectedBreed] = useState(0);
 
@@ -110,10 +113,13 @@ const BreedResults = () => {
         <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h1 className="text-lg font-semibold">Identification Results</h1>
-        <Button variant="ghost" size="sm" onClick={handleExpertReview}>
-          <HelpCircle className="w-5 h-5" />
-        </Button>
+        <h1 className="text-lg font-semibold">{t('identification.title')}</h1>
+        <div className="flex items-center gap-2">
+          <LanguageSelector variant="dropdown" className="text-foreground" />
+          <Button variant="ghost" size="sm" onClick={handleExpertReview}>
+            <HelpCircle className="w-5 h-5" />
+          </Button>
+        </div>
       </header>
 
       <div className="p-6 space-y-6">
@@ -124,7 +130,7 @@ const BreedResults = () => {
               <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
                 <div className="text-center">
                   <Eye className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Captured Image</p>
+                  <p className="text-sm text-muted-foreground">{t('identification.capturedImage')}</p>
                 </div>
               </div>
             </CardContent>
@@ -135,7 +141,7 @@ const BreedResults = () => {
         <Card className="shadow-medium bg-gradient-secondary">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl">Best Match</CardTitle>
+              <CardTitle className="text-xl">{t('identification.bestMatch')}</CardTitle>
               <Badge variant={getConfidenceBadge(currentResult.confidence)} className="text-lg px-3 py-1">
                 <Star className="w-4 h-4 mr-1" />
                 {currentResult.confidence}%
@@ -157,7 +163,7 @@ const BreedResults = () => {
               <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
                 <MapPin className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="font-medium">Origin</p>
+                  <p className="font-medium">{t('identification.origin')}</p>
                   <p className="text-sm text-muted-foreground">{currentResult.origin}</p>
                 </div>
               </div>
@@ -165,7 +171,7 @@ const BreedResults = () => {
               <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
                 <Weight className="w-5 h-5 text-accent" />
                 <div>
-                  <p className="font-medium">Average Weight</p>
+                  <p className="font-medium">{t('identification.averageWeight')}</p>
                   <p className="text-sm text-muted-foreground">{currentResult.avgWeight}</p>
                 </div>
               </div>
@@ -173,7 +179,7 @@ const BreedResults = () => {
               <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
                 <Milk className="w-5 h-5 text-success" />
                 <div>
-                  <p className="font-medium">Milk Yield</p>
+                  <p className="font-medium">{t('identification.milkYield')}</p>
                   <p className="text-sm text-muted-foreground">{currentResult.milkYield}</p>
                 </div>
               </div>
@@ -181,7 +187,7 @@ const BreedResults = () => {
 
             {/* Identifying Features */}
             <div>
-              <h4 className="font-semibold mb-2">Key Identifying Features</h4>
+              <h4 className="font-semibold mb-2">{t('identification.keyFeatures')}</h4>
               <div className="flex flex-wrap gap-2">
                 {currentResult.features.map((feature, index) => (
                   <Badge key={index} variant="outline" className="text-xs">
@@ -196,7 +202,7 @@ const BreedResults = () => {
         {/* Alternative Matches */}
         <Card className="shadow-soft">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg">Alternative Matches</CardTitle>
+            <CardTitle className="text-lg">{t('identification.alternativeMatches')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {results.slice(1).map((result, index) => (
@@ -231,7 +237,7 @@ const BreedResults = () => {
             size="lg"
           >
             <CheckCircle className="w-5 h-5 mr-2" />
-            Confirm: {currentResult.breed}
+            {t('identification.confirm')}: {currentResult.breed}
           </Button>
 
           <div className="grid grid-cols-2 gap-3">
@@ -241,7 +247,7 @@ const BreedResults = () => {
               className="h-12 touch-target"
             >
               <X className="w-4 h-4 mr-2" />
-              Not Correct
+              {t('identification.notCorrect')}
             </Button>
 
             <Button
@@ -250,7 +256,7 @@ const BreedResults = () => {
               className="h-12 touch-target"
             >
               <HelpCircle className="w-4 h-4 mr-2" />
-              Expert Review
+              {t('identification.expertReview')}
             </Button>
           </div>
         </div>
@@ -261,9 +267,9 @@ const BreedResults = () => {
             <div className="flex items-center gap-3">
               <ArrowRight className="w-5 h-5 text-accent" />
               <div>
-                <p className="font-medium">Next Step</p>
+                <p className="font-medium">{t('identification.nextStep')}</p>
                 <p className="text-sm text-muted-foreground">
-                  Create animal profile with additional details
+                  {t('identification.createProfile')}
                 </p>
               </div>
             </div>

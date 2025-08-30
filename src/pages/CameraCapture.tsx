@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -20,9 +21,11 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const CameraCapture = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isCapturing, setIsCapturing] = useState(false);
   const [flashEnabled, setFlashEnabled] = useState(false);
@@ -36,19 +39,19 @@ const CameraCapture = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const captureViews = [
-    { id: 'side', label: 'Side View', icon: <Eye className="w-5 h-5" />, primary: true },
-    { id: 'front', label: 'Front View', icon: <Eye className="w-5 h-5" />, primary: false },
-    { id: 'rear', label: 'Rear View', icon: <Eye className="w-5 h-5" />, primary: false }
+    { id: 'side', label: t('camera.sideView'), icon: <Eye className="w-5 h-5" />, primary: true },
+    { id: 'front', label: t('camera.frontView'), icon: <Eye className="w-5 h-5" />, primary: false },
+    { id: 'rear', label: t('camera.rearView'), icon: <Eye className="w-5 h-5" />, primary: false }
   ];
 
   const tips = [
-    "Ensure good lighting for best results",
-    "Capture the full body of the animal",
-    "Keep the animal calm and still",
-    "Side view provides the most accurate identification",
-    "Avoid shadows on key identifying features",
-    "Position animal at least 3 meters away",
-    "Ensure background is clear and uncluttered"
+    t('camera.tips.lighting'),
+    t('camera.tips.fullBody'),
+    t('camera.tips.keepCalm'),
+    t('camera.tips.sideView'),
+    t('camera.tips.avoidShadows'),
+    t('camera.tips.position'),
+    t('camera.tips.background')
   ];
 
   // Initialize camera
@@ -73,8 +76,8 @@ const CameraCapture = () => {
       } catch (error) {
         console.error('Camera access denied:', error);
         toast({
-          title: "Camera access required",
-          description: "Please allow camera access to capture images.",
+          title: t('camera.cameraPermission'),
+          description: t('camera.cameraPermissionMessage'),
           variant: "destructive"
         });
       }
@@ -117,8 +120,8 @@ const CameraCapture = () => {
           setTimeout(() => {
             setIsCapturing(false);
             toast({
-              title: "Image captured successfully!",
-              description: "Processing breed identification...",
+              title: t('camera.captureSuccess'),
+              description: t('camera.processing'),
             });
             
             navigate('/results', { 
@@ -222,8 +225,9 @@ const CameraCapture = () => {
         <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h1 className="text-lg font-semibold">Capture Image</h1>
-        <div className="flex items-center gap-2">
+                 <h1 className="text-lg font-semibold">{t('camera.title')}</h1>
+         <div className="flex items-center gap-3">
+           <LanguageSelector variant="dropdown" className="text-foreground" />
           <Button
             variant="ghost"
             size="sm"
@@ -277,9 +281,9 @@ const CameraCapture = () => {
                 >
                   <div className="text-center">
                     <Target className="w-16 h-16 text-primary mx-auto mb-4 animate-float" />
-                    <p className="text-sm text-foreground font-medium">Position animal in frame</p>
+                    <p className="text-sm text-foreground font-medium">{t('camera.positioningGuide')}</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {currentView === 'side' ? 'Side view recommended' : `${currentView} view active`}
+                      {currentView === 'side' ? t('camera.sideViewRecommended') : t('camera.viewActive', { view: currentView })}
                     </p>
                   </div>
                   
@@ -298,9 +302,9 @@ const CameraCapture = () => {
             <div className="relative w-80 h-60 border-2 border-primary border-dashed rounded-2xl flex items-center justify-center bg-card/10 backdrop-blur-sm">
               <div className="text-center">
                 <Camera className="w-16 h-16 text-primary mx-auto mb-4" />
-                <p className="text-sm text-foreground font-medium">Camera initializing...</p>
+                <p className="text-sm text-foreground font-medium">{t('camera.initializing')}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Please allow camera access
+                  {t('camera.pleaseAllowAccess')}
                 </p>
               </div>
             </div>
@@ -330,7 +334,7 @@ const CameraCapture = () => {
                 >
                   {view.icon}
                   {view.label}
-                  {view.primary && <Badge variant="outline" className="ml-1 text-xs">Best</Badge>}
+                  {view.primary && <Badge variant="outline" className="ml-1 text-xs">{t('camera.best')}</Badge>}
                 </Button>
               </motion.div>
             ))}
@@ -405,7 +409,7 @@ const CameraCapture = () => {
 
         <div className="mt-4 text-center">
           <p className="text-sm text-muted-foreground">
-            Tap to capture or upload from gallery
+            {t('camera.tapToCapture')}
           </p>
         </div>
       </motion.div>

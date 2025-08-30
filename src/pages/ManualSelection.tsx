@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,9 +15,11 @@ import {
   Crown
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const ManualSelection = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -149,8 +152,8 @@ const ManualSelection = () => {
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Select Breed</h1>
-          <div className="w-10"></div>
+          <h1 className="text-lg font-semibold">{t('manualSelection.title')}</h1>
+          <LanguageSelector variant="dropdown" className="text-foreground" />
         </div>
 
         {/* Search */}
@@ -158,7 +161,7 @@ const ManualSelection = () => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search breeds or regions..."
+              placeholder={t('manualSelection.searchBreeds')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-12"
@@ -170,7 +173,7 @@ const ManualSelection = () => {
         <div className="px-4 pb-4">
           <div className="flex items-center gap-2 mb-3">
             <Filter className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Filters</span>
+            <span className="text-sm font-medium">{t('manualSelection.filters')}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {filters.map(filter => (
@@ -193,7 +196,7 @@ const ManualSelection = () => {
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">
-            {filteredBreeds.length} breeds found
+            {t('manualSelection.breedsFound', { count: filteredBreeds.length })}
           </h2>
           {selectedFilters.length > 0 && (
             <Button
@@ -202,7 +205,7 @@ const ManualSelection = () => {
               onClick={() => setSelectedFilters([])}
               className="text-xs"
             >
-              Clear filters
+              {t('manualSelection.clearFilters')}
             </Button>
           )}
         </div>
@@ -210,7 +213,7 @@ const ManualSelection = () => {
         {filteredBreeds.length === 0 ? (
           <Card className="p-8 text-center">
             <p className="text-muted-foreground">
-              No breeds found matching your criteria.
+              {t('manualSelection.noBreedsFound')}
             </p>
             <Button
               variant="outline"
@@ -221,7 +224,7 @@ const ManualSelection = () => {
               }}
               className="mt-4"
             >
-              Reset search
+              {t('manualSelection.resetSearch')}
             </Button>
           </Card>
         ) : (
@@ -278,10 +281,10 @@ const ManualSelection = () => {
           <CardContent className="p-4">
             <h3 className="font-semibold mb-2 flex items-center gap-2">
               <span>💫</span>
-              Common Crossbreeds
+              {t('manualSelection.commonCrossbreeds')}
             </h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Can't find the exact breed? These are commonly found crossbreeds.
+              {t('manualSelection.crossbreedDescription')}
             </p>
             <div className="space-y-2">
               <Button 

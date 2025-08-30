@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,10 +22,12 @@ import {
   Wifi
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const AnimalProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isOnline] = useState(navigator.onLine);
   const [isSaving, setIsSaving] = useState(false);
@@ -148,17 +151,18 @@ const AnimalProfile = () => {
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Animal Profile</h1>
-          <div className="flex items-center gap-2">
+          <h1 className="text-lg font-semibold">{t('animalProfile.title')}</h1>
+          <div className="flex items-center gap-3">
+            <LanguageSelector variant="dropdown" className="text-foreground" />
             {isOnline ? (
               <Badge variant="secondary" className="bg-success text-success-foreground text-xs">
                 <Wifi className="w-3 h-3 mr-1" />
-                Online
+                {t('common.online')}
               </Badge>
             ) : (
               <Badge variant="outline" className="text-xs">
                 <WifiOff className="w-3 h-3 mr-1" />
-                Offline
+                {t('common.offline')}
               </Badge>
             )}
           </div>
@@ -170,20 +174,20 @@ const AnimalProfile = () => {
         <Card className="shadow-soft bg-gradient-secondary">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              🧠 AI Identification
+              {t('animalProfile.aiIdentification')}
               <Badge variant="outline" className="ml-auto">
-                {profileData.confidence}% confidence
+                {profileData.confidence}% {t('animalProfile.confidence')}
               </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div>
-                <Label className="text-sm font-medium">Identified Breed</Label>
+                <Label className="text-sm font-medium">{t('animalProfile.identifiedBreed')}</Label>
                 <p className="text-lg font-semibold">{profileData.breed}</p>
               </div>
               <div>
-                <Label className="text-sm font-medium">Species</Label>
+                <Label className="text-sm font-medium">{t('animalProfile.species')}</Label>
                 <p className="text-sm text-muted-foreground">{profileData.species}</p>
               </div>
             </div>
@@ -194,7 +198,7 @@ const AnimalProfile = () => {
         <Card className="shadow-soft">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              🐄 Animal Details
+              {t('animalProfile.animalDetails')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -202,7 +206,7 @@ const AnimalProfile = () => {
               <div>
                 <Label htmlFor="age" className="flex items-center gap-2 mb-2">
                   <Calendar className="w-4 h-4" />
-                  Age (years)
+                  {t('animalProfile.age')}
                 </Label>
                 <Input
                   id="age"
@@ -215,7 +219,7 @@ const AnimalProfile = () => {
               <div>
                 <Label htmlFor="weight" className="flex items-center gap-2 mb-2">
                   <Weight className="w-4 h-4" />
-                  Weight (kg)
+                  {t('animalProfile.weight')}
                 </Label>
                 <Input
                   id="weight"
@@ -230,7 +234,7 @@ const AnimalProfile = () => {
             <div>
               <Label className="flex items-center gap-2 mb-2">
                 <User className="w-4 h-4" />
-                Sex
+                {t('animalProfile.sex')}
               </Label>
               <div className="flex gap-2">
                 {sexOptions.map(option => (
@@ -250,7 +254,7 @@ const AnimalProfile = () => {
             <div>
               <Label className="flex items-center gap-2 mb-2">
                 <Heart className="w-4 h-4" />
-                Health Status
+                {t('animalProfile.healthStatus')}
               </Label>
               <div className="grid grid-cols-2 gap-2">
                 {healthOptions.map(option => (
@@ -269,7 +273,7 @@ const AnimalProfile = () => {
             <div>
               <Label htmlFor="tagNumber" className="flex items-center gap-2 mb-2">
                 <Hash className="w-4 h-4" />
-                Tag/ID Number
+                {t('animalProfile.tagNumber')}
               </Label>
               <Input
                 id="tagNumber"
@@ -285,14 +289,14 @@ const AnimalProfile = () => {
         <Card className="shadow-soft">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              👤 Owner Information
+              {t('animalProfile.ownerInformation')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor="ownerName" className="flex items-center gap-2 mb-2">
                 <User className="w-4 h-4" />
-                Owner Name *
+                {t('animalProfile.ownerName')} *
               </Label>
               <Input
                 id="ownerName"
@@ -306,7 +310,7 @@ const AnimalProfile = () => {
             <div>
               <Label htmlFor="ownerPhone" className="flex items-center gap-2 mb-2">
                 <Phone className="w-4 h-4" />
-                Phone Number *
+                {t('animalProfile.phoneNumber')} *
               </Label>
               <Input
                 id="ownerPhone"
@@ -325,12 +329,12 @@ const AnimalProfile = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <MapPin className="w-5 h-5" />
-              Location
+              {t('animalProfile.location')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <Label className="text-sm">Current Location</Label>
+              <Label className="text-sm">{t('animalProfile.currentLocation')}</Label>
               <div className="p-3 bg-muted rounded-lg">
                 <p className="text-sm font-mono">{profileData.location}</p>
               </div>
@@ -344,7 +348,7 @@ const AnimalProfile = () => {
         {/* Additional Notes */}
         <Card className="shadow-soft">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg">Additional Notes</CardTitle>
+            <CardTitle className="text-lg">{t('animalProfile.additionalNotes')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Textarea
@@ -366,12 +370,12 @@ const AnimalProfile = () => {
           {isSaving ? (
             <>
               <div className="w-5 h-5 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent mr-2" />
-              Saving Profile...
+              {t('animalProfile.savingProfile')}
             </>
           ) : (
             <>
               <Save className="w-5 h-5 mr-2" />
-              Save Animal Profile
+              {t('animalProfile.saveAnimalProfile')}
             </>
           )}
         </Button>
