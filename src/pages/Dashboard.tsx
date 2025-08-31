@@ -388,11 +388,15 @@ const Dashboard = () => {
                     <p className="text-sm text-muted-foreground">{t('dashboard.learningCenterDesc')}</p>
                   </div>
                 </Button>
-                <Button variant="ghost" className="w-full justify-start h-auto p-3">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start h-auto p-3"
+                  onClick={() => navigate('/manual-identification')}
+                >
                   <Target className="w-4 h-4 mr-3" />
                   <div className="text-left">
-                    <p className="font-medium">{t('dashboard.breedGuide')}</p>
-                    <p className="text-sm text-muted-foreground">{t('dashboard.breedGuideDesc')}</p>
+                    <p className="font-medium">{t('dashboard.manualIdentification')}</p>
+                    <p className="text-sm text-muted-foreground">{t('dashboard.manualIdentificationDesc')}</p>
                   </div>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start h-auto p-3">
