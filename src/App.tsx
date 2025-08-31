@@ -20,6 +20,8 @@ import LearningCenter from "./pages/LearningCenter";
 import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 import DataManagement from "./pages/DataManagement";
 import ManualIdentification from "./pages/ManualIdentification";
+import BreedPhotoDatabase from "./components/BreedPhotoDatabase";
+import LearningQuiz from "./components/LearningQuiz";
 
 // Import i18n configuration
 import "@/lib/i18n";
@@ -135,6 +137,8 @@ const App = () => {
             <Route path="/analytics" element={<AnalyticsDashboard />} />
             <Route path="/data-management" element={<DataManagement />} />
             <Route path="/manual-identification" element={<ManualIdentification />} />
+            <Route path="/photo-database" element={<BreedPhotoDatabase />} />
+            <Route path="/quiz" element={<LearningQuiz />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/legacy" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

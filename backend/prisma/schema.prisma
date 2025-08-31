@@ -1,0 +1,278 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  username          String   @unique
+  firstName         String
+  lastName          String
+  phoneNumber       String?
+  role              UserRole @default(FIELD_WORKER)
+  district          String?
+  state             String?
+  language          String   @default("en")
+  isActive          Boolean  @default(true)
+  lastLogin         DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  animals           Animal[]
+  identifications   Identification[]
+  corrections       Correction[]
+  learningProgress  LearningProgress[]
+  auditLogs         AuditLog[]
+  
+  @@map("users")
+}
+
+model Breed {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  scientificName  String?
+  category        BreedCategory
+  origin          String
+  region          String[]
+  characteristics String[]
+  physicalTraits  Json
+  description     String?
+  imageUrl        String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  animals         Animal[]
+  identifications Identification[]
+  breedPhotos     BreedPhoto[]
+  
+  @@map("breeds")
+}
+
+model Animal {
+  id              String   @id @default(cuid())
+  tagNumber       String?  @unique
+  breedId         String
+  userId          String
+  name            String?
+  age             Int?
+  gender          Gender?
+  weight          Float?
+  height          Float?
+  location        Json?
+  imageUrl        String?
+  imageMetadata   Json?
+  healthStatus    String?
+  notes           String?
+  isVerified      Boolean  @default(false)
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  breed           Breed    @relation(fields: [breedId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+  identifications Identification[]
+  
+  @@map("animals")
+}
+
+model Identification {
+  id              String   @id @default(cuid())
+  animalId        String?
+  breedId         String
+  userId          String
+  imageUrl        String
+  imageMetadata   Json?
+  confidence      Float
+  predictions     Json     // Top 3 predictions with confidence scores
+  uncertainty     Float?
+  processingTime  Float?
+  location        Json?
+  deviceInfo      Json?
+  status          IdentificationStatus @default(PENDING)
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  reviewNotes     String?
+  isCorrect       Boolean?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  animal          Animal?  @relation(fields: [animalId], references: [id])
+  breed           Breed    @relation(fields: [breedId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+  corrections     Correction[]
+  
+  @@map("identifications")
+}
+
+model Correction {
+  id                String   @id @default(cuid())
+  identificationId  String
+  userId            String
+  correctBreedId    String?
+  reason            String
+  confidence        Float?
+  expertNotes       String?
+  isExpertReview    Boolean  @default(false)
+  status            CorrectionStatus @default(PENDING)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  identification    Identification @relation(fields: [identificationId], references: [id])
+  user              User     @relation(fields: [userId], references: [id])
+  
+  @@map("corrections")
+}
+
+model BreedPhoto {
+  id              String   @id @default(cuid())
+  breedId         String
+  imageUrl        String
+  thumbnailUrl    String?
+  caption         String?
+  tags            String[]
+  quality         PhotoQuality @default(GOOD)
+  isVerified      Boolean  @default(false)
+  verifiedBy      String?
+  uploadedBy      String
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  breed           Breed    @relation(fields: [breedId], references: [id])
+  
+  @@map("breed_photos")
+}
+
+model LearningProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  moduleId        String
+  moduleType      LearningModuleType
+  progress        Float    @default(0)
+  isCompleted     Boolean  @default(false)
+  score           Float?
+  timeSpent       Int      @default(0) // in seconds
+  lastAccessed    DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id])
+  
+  @@unique([userId, moduleId])
+  @@map("learning_progress")
+}
+
+model AuditLog {
+  id              String   @id @default(cuid())
+  userId          String
+  action          String
+  entityType      String
+  entityId        String?
+  oldValues       Json?
+  newValues       Json?
+  ipAddress       String?
+  userAgent       String?
+  timestamp       DateTime @default(now())
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id])
+  
+  @@map("audit_logs")
+}
+
+model SyncQueue {
+  id              String   @id @default(cuid())
+  userId          String
+  entityType      String
+  entityId        String
+  operation       SyncOperation
+  data            Json
+  attempts        Int      @default(0)
+  maxAttempts     Int      @default(3)
+  status          SyncStatus @default(PENDING)
+  error           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("sync_queue")
+}
+
+// Enums
+enum UserRole {
+  FIELD_WORKER
+  SUPERVISOR
+  EXPERT
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum BreedCategory {
+  CATTLE
+  BUFFALO
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+enum IdentificationStatus {
+  PENDING
+  VALIDATED
+  REJECTED
+  FLAGGED
+  UNDER_REVIEW
+}
+
+enum CorrectionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  UNDER_REVIEW
+}
+
+enum PhotoQuality {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
+
+enum LearningModuleType {
+  TUTORIAL
+  BREED_GUIDE
+  QUIZ
+  ASSESSMENT
+  CERTIFICATION
+}
+
+enum SyncOperation {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum SyncStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
