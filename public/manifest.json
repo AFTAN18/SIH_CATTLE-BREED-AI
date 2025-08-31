@@ -1,17 +1,23 @@
 {
-  "name": "Cattle Breed Identification",
-  "short_name": "Cattle ID",
-  "description": "AI-powered cattle and buffalo breed identification for field workers and veterinarians",
+  "name": "Bharat Pashudhan - Cattle Breed Identification",
+  "short_name": "BPA Breed ID",
+  "description": "AI-powered cattle and buffalo breed identification system for Indian Field Level Workers",
+  "version": "1.0.0",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#22c55e",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
   "dir": "ltr",
-  "categories": ["agriculture", "productivity", "utilities"],
+  "categories": ["agriculture", "education", "productivity", "utilities"],
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    },
     {
       "src": "/icons/icon-72x72.png",
       "sizes": "72x72",
@@ -61,68 +67,117 @@
       "purpose": "maskable any"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/dashboard.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Dashboard with statistics and quick actions"
-    },
-    {
-      "src": "/screenshots/camera.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Camera capture interface with positioning guides"
-    },
-    {
-      "src": "/screenshots/results.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Breed identification results with confidence scores"
-    }
-  ],
   "shortcuts": [
     {
-      "name": "Capture New Animal",
-      "short_name": "Capture",
-      "description": "Quickly capture and identify a new animal",
+      "name": "Camera Capture",
+      "short_name": "Camera",
+      "description": "Quick access to camera for breed identification",
       "url": "/camera",
       "icons": [
         {
           "src": "/icons/camera-96x96.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
-      "name": "View Dashboard",
-      "short_name": "Dashboard",
-      "description": "View your statistics and recent activity",
-      "url": "/dashboard",
-      "icons": [
-        {
-          "src": "/icons/dashboard-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Manual Selection",
-      "short_name": "Manual",
-      "description": "Manually select breed from database",
-      "url": "/manual-selection",
+      "name": "Manual Identification",
+      "short_name": "Manual ID",
+      "description": "Manual breed identification tools",
+      "url": "/manual-identification",
       "icons": [
         {
           "src": "/icons/manual-96x96.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Learning Center",
+      "short_name": "Learn",
+      "description": "Breed identification learning resources",
+      "url": "/learning",
+      "icons": [
+        {
+          "src": "/icons/learn-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Analytics Dashboard",
+      "short_name": "Analytics",
+      "description": "View performance analytics and reports",
+      "url": "/analytics",
+      "icons": [
+        {
+          "src": "/icons/analytics-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     }
   ],
-  "related_applications": [],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard - Mobile View"
+    },
+    {
+      "src": "/screenshots/camera-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Camera Capture - Mobile View"
+    },
+    {
+      "src": "/screenshots/results-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Breed Results - Mobile View"
+    },
+    {
+      "src": "/screenshots/learning-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Learning Center - Mobile View"
+    },
+    {
+      "src": "/screenshots/analytics-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Analytics Dashboard - Mobile View"
+    },
+    {
+      "src": "/screenshots/dashboard-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard - Desktop View"
+    },
+    {
+      "src": "/screenshots/analytics-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Analytics Dashboard - Desktop View"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://bharat-pashudhan.vercel.app"
+    }
+  ],
   "prefer_related_applications": false,
   "edge_side_panel": {
     "preferred_width": 400
@@ -133,7 +188,7 @@
   "handle_links": "preferred",
   "protocol_handlers": [
     {
-      "protocol": "web+cattleid",
+      "protocol": "web+cattle",
       "url": "/?breed=%s"
     }
   ],
@@ -146,7 +201,7 @@
     }
   ],
   "share_target": {
-    "action": "/camera",
+    "action": "/share",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
@@ -160,5 +215,25 @@
         }
       ]
     }
-  }
+  },
+  "permissions": [
+    "camera",
+    "geolocation",
+    "notifications",
+    "background-sync",
+    "storage"
+  ],
+  "features": [
+    "Cross Platform",
+    "fast",
+    "simple",
+    "AI-Powered",
+    "Offline Support",
+    "Multi-Language"
+  ],
+  "developer": {
+    "name": "Government of India",
+    "url": "https://dahd.nic.in"
+  },
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
 }
