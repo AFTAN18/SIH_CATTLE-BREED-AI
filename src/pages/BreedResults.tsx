@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -15,10 +15,12 @@ import {
   Milk,
   ArrowRight,
   Star,
-  Eye
+  Eye,
+  Loader2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import LanguageSelector from '@/components/LanguageSelector';
+import { useIdentifyBreed, IdentificationResult } from '@/services/api';
 
 const BreedResults = () => {
   const navigate = useNavigate();
@@ -26,43 +28,90 @@ const BreedResults = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [selectedBreed, setSelectedBreed] = useState(0);
+  const [results, setResults] = useState<IdentificationResult[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  // Mock results data
-  const results = [
-    {
-      id: 1,
-      breed: 'Holstein Friesian',
-      confidence: 94,
-      species: 'Cattle',
-      origin: 'Netherlands',
-      avgWeight: '650-700 kg',
-      milkYield: '25-30 L/day',
-      features: ['Black and white patches', 'Large size', 'High milk production'],
-      description: 'World-famous dairy breed known for high milk production and distinctive black and white markings.'
-    },
-    {
-      id: 2,
-      breed: 'Jersey',
-      confidence: 87,
-      species: 'Cattle',
-      origin: 'Jersey Island',
-      avgWeight: '350-450 kg',
-      milkYield: '18-22 L/day',
-      features: ['Light brown color', 'Smaller size', 'High butterfat content'],
-      description: 'Small dairy breed producing rich, creamy milk with high butterfat content.'
-    },
-    {
-      id: 3,
-      breed: 'Gir',
-      confidence: 73,
-      species: 'Cattle',
-      origin: 'Gujarat, India',
-      avgWeight: '400-500 kg',
-      milkYield: '12-18 L/day',
-      features: ['Distinctive hump', 'Pendulous ears', 'Docile nature'],
-      description: 'Indigenous Indian breed known for disease resistance and adaptability to tropical climate.'
-    }
-  ];
+  const identifyBreedMutation = useIdentifyBreed();
+
+  // Process image if provided
+  useEffect(() => {
+    const processImage = async () => {
+      if (location.state?.imageData && !results.length) {
+        setIsProcessing(true);
+        
+        try {
+          // Convert data URL to File object
+          const response = await fetch(location.state.imageData);
+          const blob = await response.blob();
+          const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
+
+          const result = await identifyBreedMutation.mutateAsync({
+            imageFile: file,
+            options: { topK: 3, confidenceThreshold: 0.7 }
+          });
+
+          if (result.success && result.data.results) {
+            setResults(result.data.results);
+            toast({
+              title: t('identification.success'),
+              description: t('identification.processingComplete'),
+            });
+          }
+        } catch (error) {
+          console.error('Breed identification failed:', error);
+          toast({
+            title: t('identification.error'),
+            description: t('identification.processingFailed'),
+            variant: "destructive"
+          });
+          
+          // Fallback to mock data
+          setResults([
+            {
+              id: '1',
+              breed: 'Gir',
+              confidence: 94.5,
+              species: 'Cattle',
+              origin: 'Gujarat, India',
+              avgWeight: '400-500 kg',
+              milkYield: '12-18 L/day',
+              features: ['Distinctive hump', 'Pendulous ears', 'Docile nature'],
+              characteristics: ['Disease resistant', 'Tropical climate adapted', 'Good draught animal'],
+              description: 'Indigenous Indian breed known for disease resistance and adaptability to tropical climate.'
+            },
+            {
+              id: '2',
+              breed: 'Sahiwal',
+              confidence: 87.2,
+              species: 'Cattle',
+              origin: 'Punjab, India',
+              avgWeight: '350-450 kg',
+              milkYield: '15-20 L/day',
+              features: ['Reddish brown', 'Medium size', 'Short horns'],
+              characteristics: ['Heat tolerant', 'High milk production', 'Good temperament'],
+              description: 'Heat-tolerant dairy breed known for high milk production and good temperament.'
+            },
+            {
+              id: '3',
+              breed: 'Murrah',
+              confidence: 76.8,
+              species: 'Buffalo',
+              origin: 'Haryana, India',
+              avgWeight: '450-550 kg',
+              milkYield: '15-20 L/day',
+              features: ['Black color', 'Short horns', 'High milk yield'],
+              characteristics: ['High milk production', 'Good temperament', 'Commercial breed'],
+              description: 'High-yielding buffalo breed known for excellent milk quality and commercial value.'
+            }
+          ]);
+        } finally {
+          setIsProcessing(false);
+        }
+      }
+    };
+
+    processImage();
+  }, [location.state?.imageData, results.length, identifyBreedMutation, toast, t]);
 
   const currentResult = results[selectedBreed];
 
@@ -142,60 +191,86 @@ const BreedResults = () => {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl">{t('identification.bestMatch')}</CardTitle>
-              <Badge variant={getConfidenceBadge(currentResult.confidence)} className="text-lg px-3 py-1">
-                <Star className="w-4 h-4 mr-1" />
-                {currentResult.confidence}%
-              </Badge>
+              {isProcessing ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">{t('identification.processing')}</span>
+                </div>
+              ) : currentResult ? (
+                <Badge variant={getConfidenceBadge(currentResult.confidence)} className="text-lg px-3 py-1">
+                  <Star className="w-4 h-4 mr-1" />
+                  {currentResult.confidence}%
+                </Badge>
+              ) : null}
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <h3 className="text-2xl font-bold text-foreground">{currentResult.breed}</h3>
-              <p className="text-muted-foreground">{currentResult.species} • {currentResult.origin}</p>
-            </div>
-            
-            <Progress value={currentResult.confidence} className="h-3" />
-            
-            <p className="text-sm leading-relaxed">{currentResult.description}</p>
+            {isProcessing ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
+                  <p className="text-sm text-muted-foreground">{t('identification.analyzing')}</p>
+                </div>
+              </div>
+            ) : currentResult ? (
+              <>
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">{currentResult.breed}</h3>
+                  <p className="text-muted-foreground">{currentResult.species} • {currentResult.origin}</p>
+                </div>
+                
+                <Progress value={currentResult.confidence} className="h-3" />
+                
+                <p className="text-sm leading-relaxed">{currentResult.description}</p>
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">{t('identification.noResults')}</p>
+              </div>
+            )}
 
             {/* Key Characteristics */}
-            <div className="grid grid-cols-1 gap-3">
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
-                <MapPin className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="font-medium">{t('identification.origin')}</p>
-                  <p className="text-sm text-muted-foreground">{currentResult.origin}</p>
+            {currentResult && !isProcessing && (
+              <>
+                <div className="grid grid-cols-1 gap-3">
+                  <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                    <MapPin className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="font-medium">{t('identification.origin')}</p>
+                      <p className="text-sm text-muted-foreground">{currentResult.origin}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                    <Weight className="w-5 h-5 text-accent" />
+                    <div>
+                      <p className="font-medium">{t('identification.averageWeight')}</p>
+                      <p className="text-sm text-muted-foreground">{currentResult.avgWeight}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                    <Milk className="w-5 h-5 text-success" />
+                    <div>
+                      <p className="font-medium">{t('identification.milkYield')}</p>
+                      <p className="text-sm text-muted-foreground">{currentResult.milkYield}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
-                <Weight className="w-5 h-5 text-accent" />
-                <div>
-                  <p className="font-medium">{t('identification.averageWeight')}</p>
-                  <p className="text-sm text-muted-foreground">{currentResult.avgWeight}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
-                <Milk className="w-5 h-5 text-success" />
-                <div>
-                  <p className="font-medium">{t('identification.milkYield')}</p>
-                  <p className="text-sm text-muted-foreground">{currentResult.milkYield}</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Identifying Features */}
-            <div>
-              <h4 className="font-semibold mb-2">{t('identification.keyFeatures')}</h4>
-              <div className="flex flex-wrap gap-2">
-                {currentResult.features.map((feature, index) => (
-                  <Badge key={index} variant="outline" className="text-xs">
-                    {feature}
-                  </Badge>
-                ))}
-              </div>
-            </div>
+                {/* Identifying Features */}
+                <div>
+                  <h4 className="font-semibold mb-2">{t('identification.keyFeatures')}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentResult.features.map((feature, index) => (
+                      <Badge key={index} variant="outline" className="text-xs">
+                        {feature}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
