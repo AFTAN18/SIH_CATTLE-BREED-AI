@@ -98,11 +98,6 @@
       ]
     }
   ],
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   },
@@ -111,10 +106,5 @@
       "NODE_ENV": "production"
     }
   },
-  "regions": ["iad1"],
-  "functions": {
-    "api/**/*.js": {
-      "maxDuration": 30
-    }
-  }
+  "regions": ["iad1"]
 }
