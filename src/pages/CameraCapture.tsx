@@ -329,7 +329,7 @@ const CameraCapture = () => {
                 <Button
                   variant={currentView === view.id ? "default" : "secondary"}
                   size="sm"
-                  onClick={() => setCurrentView(view.id as any)}
+                  onClick={() => setCurrentView(view.id)}
                   className="flex items-center gap-2 shadow-soft"
                 >
                   {view.icon}

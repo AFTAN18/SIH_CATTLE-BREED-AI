@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Breed } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,7 +24,7 @@ const ManualSelection = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedBreed, setSelectedBreed] = useState<any>(null);
+  const [selectedBreed, setSelectedBreed] = useState<Breed | null>(null);
 
   const filters = [
     { id: 'cattle', label: 'Cattle', icon: '🐄' },
@@ -128,7 +129,7 @@ const ManualSelection = () => {
     );
   };
 
-  const handleBreedSelect = (breed: any) => {
+  const handleBreedSelect = (breed: Breed) => {
     setSelectedBreed(breed);
     toast({
       title: "Breed selected!",

@@ -359,6 +359,20 @@ npm run test:e2e
 - **Battery Usage**: Optimized for field use
 - **Network Resilience**: Automatic retry and fallback
 
+## 🔒 Security Features
+
+- JWT-based authentication
+- Role-based access control
+- Input validation and sanitization
+- Rate limiting and DDoS protection
+- Secure file upload validation
+- HTTPS enforcement
+- CORS configuration
+- Helmet.js security headers
+- SQL injection prevention
+- XSS protection
+
+## 🌐 Internationalization
 
 
 ### RTL Support
