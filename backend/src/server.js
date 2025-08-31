@@ -24,6 +24,7 @@ import identificationRoutes from './routes/identification.js';
 import syncRoutes from './routes/sync.js';
 import dashboardRoutes from './routes/dashboard.js';
 import mlRoutes from './routes/ml.js';
+import analyticsRoutes from './routes/analytics.js';
 
 // Import database and cache
 import { initDatabase } from './database/connection.js';
@@ -119,6 +120,7 @@ app.use('/api/identify', identificationRoutes);
 app.use('/api/sync', authMiddleware, syncRoutes);
 app.use('/api/dashboard', authMiddleware, dashboardRoutes);
 app.use('/api/ml', mlRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
