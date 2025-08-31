@@ -122,7 +122,14 @@
         "title": "Expert Level",
         "description": "1000+ registrations"
       }
-    }
+    },
+    "learningResources": "Learning Resources",
+    "learningCenter": "Learning Center",
+    "learningCenterDesc": "Interactive tutorials and breed guides",
+    "breedGuide": "Breed Guide",
+    "breedGuideDesc": "Comprehensive breed information",
+    "photoGuidelines": "Photo Guidelines",
+    "photoGuidelinesDesc": "Best practices for capturing images"
   },
   "camera": {
     "title": "Camera Capture",
@@ -616,6 +623,189 @@
     "additionalNotes": "Additional Notes",
     "savingProfile": "Saving Profile...",
     "saveAnimalProfile": "Save Animal Profile"
+  },
+  "learning": {
+    "title": "Learning Center",
+    "subtitle": "Master cattle breed identification with interactive tutorials",
+    "breedGuide": {
+      "title": "Breed Guide",
+      "subtitle": "Comprehensive information about cattle and buffalo breeds",
+      "searchPlaceholder": "Search breeds by name, origin, or characteristics...",
+      "allBreeds": "All Breeds",
+      "cattle": "Cattle",
+      "buffalo": "Buffalo",
+      "availableBreeds": "Available Breeds",
+      "overview": "Overview",
+      "physical": "Physical",
+      "performance": "Performance",
+      "identification": "Identification",
+      "characteristics": "Characteristics",
+      "bestPractices": "Best Practices",
+      "identificationTips": "Identification Tips",
+      "commonMistakes": "Common Mistakes",
+      "selectBreed": "Select a Breed",
+      "selectBreedDesc": "Choose a breed from the list to view detailed information"
+    },
+    "tutorials": {
+      "cameraBasics": {
+        "title": "Camera Basics",
+        "step1": {
+          "title": "Camera Setup",
+          "description": "Learn how to properly set up your camera for optimal breed identification. This step covers camera positioning, lighting, and basic settings.",
+          "tip1": "Ensure good natural lighting for clear photos",
+          "tip2": "Keep the camera steady to avoid blurry images",
+          "tip3": "Position the animal at least 3 meters away"
+        },
+        "step2": {
+          "title": "Photo Composition",
+          "description": "Master the art of composing photos that highlight key breed characteristics. Learn about angles, framing, and focus techniques.",
+          "tip1": "Capture the full body of the animal",
+          "tip2": "Focus on distinctive features like hump or horns",
+          "tip3": "Avoid shadows on important characteristics"
+        },
+        "step3": {
+          "title": "Quality Check",
+          "description": "Learn how to verify photo quality before identification. This step covers image review, retake guidelines, and optimization tips.",
+          "tip1": "Check for clarity and sharpness",
+          "tip2": "Ensure the animal is clearly visible",
+          "tip3": "Verify lighting is adequate for identification"
+        }
+      },
+      "breedIdentification": {
+        "title": "Breed Identification",
+        "step1": {
+          "title": "Visual Analysis",
+          "description": "Learn to identify key visual characteristics of different breeds. This step covers color patterns, body structure, and distinctive features.",
+          "tip1": "Look for distinctive hump in Gir cattle",
+          "tip2": "Check ear shape and size",
+          "tip3": "Observe coat color and patterns"
+        },
+        "step2": {
+          "title": "Feature Comparison",
+          "description": "Compare observed features with breed characteristics. Learn systematic approaches to matching visual traits with breed standards.",
+          "tip1": "Compare size with known breed standards",
+          "tip2": "Check horn shape and size",
+          "tip3": "Evaluate body proportions"
+        },
+        "step3": {
+          "title": "Confidence Assessment",
+          "description": "Learn to assess confidence levels in breed identification. Understand when to seek additional verification or expert opinion.",
+          "tip1": "Consider multiple characteristics together",
+          "tip2": "Account for lighting and angle effects",
+          "tip3": "Use confidence scores as guidance"
+        }
+      }
+    },
+    "progress": {
+      "title": "Your Progress",
+      "tutorials": "Tutorials",
+      "quizzes": "Quizzes",
+      "achievements": "Achievements",
+      "completion": "Completion"
+    },
+    "tabs": {
+      "tutorials": "Tutorials",
+      "breeds": "Breeds",
+      "quizzes": "Quizzes",
+      "achievements": "Achievements"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "cameraBasics": {
+      "title": "Camera Basics",
+      "description": "Learn how to capture high-quality photos for breed identification"
+    },
+    "breedIdentification": {
+      "title": "Breed Identification",
+      "description": "Master the art of identifying different cattle and buffalo breeds"
+    },
+    "photoQuality": {
+      "title": "Photo Quality",
+      "description": "Tips for capturing clear, well-lit photos for better identification"
+    },
+    "advancedFeatures": {
+      "title": "Advanced Features",
+      "description": "Explore advanced camera settings and identification techniques"
+    },
+    "breeds": {
+      "characteristics": "characteristics",
+      "learn": "Learn",
+      "gir": {
+        "characteristics": {
+          "hump": "Large distinctive hump",
+          "ears": "Drooping pendulous ears",
+          "color": "Reddish coat color",
+          "size": "Large body size"
+        },
+        "practices": {
+          "lighting": "Good natural lighting",
+          "angle": "Side view angle",
+          "distance": "3-5 meters distance"
+        },
+        "mistakes": {
+          "shadow": "Avoid shadows on hump",
+          "angle": "Don't shoot from too close",
+          "lighting": "Avoid backlighting"
+        }
+      },
+      "sahiwal": {
+        "characteristics": {
+          "color": "Reddish brown color",
+          "size": "Medium body size",
+          "temperament": "Docile temperament",
+          "adaptation": "Heat tolerant"
+        },
+        "practices": {
+          "background": "Clear background",
+          "lighting": "Even lighting",
+          "position": "Side view position"
+        },
+        "mistakes": {
+          "background": "Avoid cluttered background",
+          "lighting": "Avoid harsh shadows",
+          "angle": "Don't shoot from above"
+        }
+      },
+      "murrah": {
+        "characteristics": {
+          "color": "Black color",
+          "horns": "Curved horns",
+          "size": "Large size",
+          "yield": "High milk yield"
+        },
+        "practices": {
+          "lighting": "Good lighting on body",
+          "angle": "Side view for horns",
+          "background": "Contrasting background"
+        },
+        "mistakes": {
+          "lighting": "Avoid dark shadows",
+          "angle": "Don't hide horns",
+          "background": "Avoid dark backgrounds"
+        }
+      }
+    },
+    "quizzes": {
+      "title": "Knowledge Quizzes",
+      "comingSoon": "Quizzes Coming Soon",
+      "description": "Test your knowledge with interactive quizzes and assessments"
+    },
+    "achievements": {
+      "firstId": "First Identification",
+      "cameraMaster": "Camera Master",
+      "breedExpert": "Breed Expert",
+      "quizChampion": "Quiz Champion",
+      "earned": "Achievement earned",
+      "locked": "Locked achievement"
+    },
+    "quickActions": {
+      "practice": "Practice",
+      "download": "Download",
+      "tips": "Tips"
+    }
   },
   "success": {
     "photoCaptured": "Photo captured successfully",

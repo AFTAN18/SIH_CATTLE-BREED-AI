@@ -14,6 +14,7 @@ import CameraCapture from "./pages/CameraCapture";
 import BreedResults from "./pages/BreedResults";
 import ManualSelection from "./pages/ManualSelection";
 import AnimalProfile from "./pages/AnimalProfile";
+import LearningCenter from "./pages/LearningCenter";
 
 // Import i18n configuration
 import "@/lib/i18n";
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="/results" element={<BreedResults />} />
             <Route path="/manual-selection" element={<ManualSelection />} />
             <Route path="/profile" element={<AnimalProfile />} />
+            <Route path="/learning" element={<LearningCenter />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/legacy" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

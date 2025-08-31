@@ -372,23 +372,34 @@ const Dashboard = () => {
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-primary" />
-                Learning Resources
+                {t('dashboard.learningResources')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <Button variant="ghost" className="w-full justify-start h-auto p-3">
-                  <Plus className="w-4 h-4 mr-3" />
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start h-auto p-3"
+                  onClick={() => navigate('/learning')}
+                >
+                  <BookOpen className="w-4 h-4 mr-3" />
                   <div className="text-left">
-                    <p className="font-medium">Breed Identification Tips</p>
-                    <p className="text-sm text-muted-foreground">Learn key features to identify breeds</p>
+                    <p className="font-medium">{t('dashboard.learningCenter')}</p>
+                    <p className="text-sm text-muted-foreground">{t('dashboard.learningCenterDesc')}</p>
                   </div>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start h-auto p-3">
-                  <Plus className="w-4 h-4 mr-3" />
+                  <Target className="w-4 h-4 mr-3" />
                   <div className="text-left">
-                    <p className="font-medium">Photography Guidelines</p>
-                    <p className="text-sm text-muted-foreground">Best practices for capturing images</p>
+                    <p className="font-medium">{t('dashboard.breedGuide')}</p>
+                    <p className="text-sm text-muted-foreground">{t('dashboard.breedGuideDesc')}</p>
+                  </div>
+                </Button>
+                <Button variant="ghost" className="w-full justify-start h-auto p-3">
+                  <Camera className="w-4 h-4 mr-3" />
+                  <div className="text-left">
+                    <p className="font-medium">{t('dashboard.photoGuidelines')}</p>
+                    <p className="text-sm text-muted-foreground">{t('dashboard.photoGuidelinesDesc')}</p>
                   </div>
                 </Button>
               </div>
