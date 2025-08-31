@@ -29,7 +29,22 @@ import LanguageSelector from '@/components/LanguageSelector';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  // Force re-render when language changes
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      // Force component re-render
+      window.location.reload();
+    };
+    
+    i18n.on('languageChanged', handleLanguageChange);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
+
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [stats] = useState({
     todayCount: 12,

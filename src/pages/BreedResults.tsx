@@ -176,10 +176,23 @@ const BreedResults = () => {
         {location.state?.imageData && (
           <Card className="shadow-soft">
             <CardContent className="p-4">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <Eye className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">{t('identification.capturedImage')}</p>
+              <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                <img 
+                  src={location.state.imageData} 
+                  alt={t('identification.capturedImage')}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to placeholder if image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                <div className="hidden w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <Eye className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">{t('identification.capturedImage')}</p>
+                  </div>
                 </div>
               </div>
             </CardContent>

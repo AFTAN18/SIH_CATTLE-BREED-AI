@@ -22,6 +22,9 @@ import DataManagement from "./pages/DataManagement";
 import ManualIdentification from "./pages/ManualIdentification";
 import BreedPhotoDatabase from "./components/BreedPhotoDatabase";
 import LearningQuiz from "./components/LearningQuiz";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Import i18n configuration
 import "@/lib/i18n";
@@ -127,18 +130,84 @@ const App = () => {
           )}
           
           <Routes>
-            <Route path="/" element={showSplash ? <SplashScreen /> : <Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/camera" element={<CameraCapture />} />
-            <Route path="/results" element={<BreedResults />} />
-            <Route path="/manual-selection" element={<ManualSelection />} />
-            <Route path="/profile" element={<AnimalProfile />} />
-            <Route path="/learning" element={<LearningCenter />} />
-            <Route path="/analytics" element={<AnalyticsDashboard />} />
-            <Route path="/data-management" element={<DataManagement />} />
-            <Route path="/manual-identification" element={<ManualIdentification />} />
-            <Route path="/photo-database" element={<BreedPhotoDatabase />} />
-            <Route path="/quiz" element={<LearningQuiz />} />
+            {/* Public Routes */}
+            <Route path="/login" element={
+              <ProtectedRoute requireAuth={false}>
+                <Login />
+              </ProtectedRoute>
+            } />
+            <Route path="/signup" element={
+              <ProtectedRoute requireAuth={false}>
+                <Signup />
+              </ProtectedRoute>
+            } />
+            
+            {/* Protected Routes */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                {showSplash ? <SplashScreen /> : <Dashboard />}
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/camera" element={
+              <ProtectedRoute>
+                <CameraCapture />
+              </ProtectedRoute>
+            } />
+            <Route path="/breed-results" element={
+              <ProtectedRoute>
+                <BreedResults />
+              </ProtectedRoute>
+            } />
+            <Route path="/results" element={
+              <ProtectedRoute>
+                <BreedResults />
+              </ProtectedRoute>
+            } />
+            <Route path="/manual-selection" element={
+              <ProtectedRoute>
+                <ManualSelection />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <AnimalProfile />
+              </ProtectedRoute>
+            } />
+            <Route path="/learning" element={
+              <ProtectedRoute>
+                <LearningCenter />
+              </ProtectedRoute>
+            } />
+            <Route path="/analytics" element={
+              <ProtectedRoute>
+                <AnalyticsDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/data-management" element={
+              <ProtectedRoute>
+                <DataManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/manual-identification" element={
+              <ProtectedRoute>
+                <ManualIdentification />
+              </ProtectedRoute>
+            } />
+            <Route path="/photo-database" element={
+              <ProtectedRoute>
+                <BreedPhotoDatabase />
+              </ProtectedRoute>
+            } />
+            <Route path="/quiz" element={
+              <ProtectedRoute>
+                <LearningQuiz />
+              </ProtectedRoute>
+            } />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/legacy" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

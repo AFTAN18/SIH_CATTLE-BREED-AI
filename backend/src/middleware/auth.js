@@ -1,5 +1,19 @@
 import jwt from 'jsonwebtoken';
 import { logger } from '../utils/logger.js';
+import {
+  loginLimiter,
+  generalLimiter,
+  generateSecureToken,
+  generateTokenHash,
+  createAccessToken,
+  createRefreshToken,
+  authenticateToken,
+  requireRole,
+  checkAccountLockout,
+  updateFailedAttempts,
+  auditLog,
+  cleanupExpiredSessions
+} from './auth-utils.js';
 
 export const authMiddleware = (req, res, next) => {
   try {

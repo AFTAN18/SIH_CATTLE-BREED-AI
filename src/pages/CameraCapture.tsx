@@ -64,28 +64,45 @@ const CameraCapture = () => {
   // Initialize camera with enhanced service
   useEffect(() => {
     const initCamera = async () => {
-      setIsInitializing(true);
       try {
-        await cameraService.initialize();
-        const mediaStream = await cameraService.startStream({
-          facingMode: 'environment',
-          width: 1920,
-          height: 1080
-        });
+        setIsInitializing(true);
         
+        // Check if getUserMedia is supported
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error('Camera not supported');
+        }
+
+        // Request camera permissions directly
+        const constraints = {
+          video: {
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+            facingMode: 'environment'
+          },
+          audio: false
+        };
+
+        const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
         setStream(mediaStream);
         setIsCameraActive(true);
         
-        if (videoRef.current) {
+        if (videoRef.current && mediaStream) {
           videoRef.current.srcObject = mediaStream;
           videoRef.current.onloadedmetadata = () => {
-            videoRef.current?.play();
+            videoRef.current?.play().catch(console.error);
           };
         }
+        
+        toast({
+          title: t('camera.cameraReady'),
+          description: t('camera.readyToCapture'),
+        });
+        
       } catch (error) {
         console.error('Camera initialization failed:', error);
+        setIsCameraActive(false);
         toast({
-          title: t('camera.cameraPermission'),
+          title: t('camera.cameraError'),
           description: t('camera.cameraPermissionMessage'),
           variant: "destructive"
         });
@@ -97,7 +114,9 @@ const CameraCapture = () => {
     initCamera();
 
     return () => {
-      cameraService.destroy();
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
     };
   }, [toast, t]);
 
@@ -107,10 +126,23 @@ const CameraCapture = () => {
     setIsCapturing(true);
     
     try {
-      const capturedImageData = await cameraService.captureImage(videoRef.current);
+      // Create canvas and capture image directly
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) throw new Error('Canvas context not available');
+      
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      
+      // Draw video frame to canvas
+      ctx.drawImage(videoRef.current, 0, 0);
+      
+      // Convert to data URL
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
       
       // Show preview with captured image
-      setCapturedImage(capturedImageData.dataUrl);
+      setCapturedImage(dataUrl);
       setShowPreview(true);
       
       toast({
@@ -136,7 +168,7 @@ const CameraCapture = () => {
         description: t('camera.processing'),
       });
       
-      navigate('/results', { 
+      navigate('/breed-results', { 
         state: { 
           imageData: capturedImage,
           viewType: currentView,
@@ -192,7 +224,7 @@ const CameraCapture = () => {
       });
 
       // Navigate to results
-      navigate('/results', {
+      navigate('/breed-results', {
         state: {
           imageData: URL.createObjectURL(file),
           viewType: currentView,

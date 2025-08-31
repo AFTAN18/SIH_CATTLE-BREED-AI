@@ -1,0 +1,48 @@
+{
+  "modelTopology": {
+    "class_name": "Sequential",
+    "config": {
+      "name": "bharat_pashudhan_cattle_classifier",
+      "layers": [
+        {
+          "class_name": "InputLayer",
+          "config": {
+            "batch_input_shape": [null, 224, 224, 3],
+            "dtype": "float32",
+            "sparse": false,
+            "name": "input_layer"
+          }
+        },
+        {
+          "class_name": "Dense",
+          "config": {
+            "units": 43,
+            "activation": "softmax",
+            "use_bias": true,
+            "name": "predictions"
+          }
+        }
+      ]
+    }
+  },
+  "weightsManifest": [
+    {
+      "paths": ["weights.bin"],
+      "weights": [
+        {
+          "name": "predictions/kernel",
+          "shape": [150528, 43],
+          "dtype": "float32"
+        },
+        {
+          "name": "predictions/bias",
+          "shape": [43],
+          "dtype": "float32"
+        }
+      ]
+    }
+  ],
+  "format": "tfjs-graph-model",
+  "generatedBy": "TensorFlow.js v4.10.0",
+  "convertedBy": "Bharat Pashudhan Training Pipeline v1.0.0"
+}

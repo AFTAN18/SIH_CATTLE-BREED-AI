@@ -1,21 +1,19 @@
 {
-  "name": "cattle-breed-identification-backend",
+  "name": "bharat-pashudhan-backend",
   "version": "1.0.0",
-  "description": "Backend API for cattle/buffalo breed identification system",
-  "main": "src/server.js",
+  "description": "Secure Backend API for Bharat Pashudhan cattle breed identification system",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "cd ../frontend && npm run build",
-    "build:server": "echo 'Server build complete'",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "db:migrate": "node src/database/migrate.js",
-    "db:seed": "node src/database/seed.js",
+    "db:init": "node src/scripts/initDatabase.js",
+    "db:migrate": "node src/scripts/migrate.js",
+    "db:seed": "node src/scripts/seed.js",
     "db:reset": "npm run db:migrate && npm run db:seed"
   },
   "keywords": [
@@ -23,11 +21,13 @@
     "breed",
     "identification",
     "ai",
-    "ml",
     "agriculture",
-    "livestock"
+    "india",
+    "secure",
+    "authentication",
+    "tensorflow"
   ],
-  "author": "Cattle ID Team",
+  "author": "Bharat Pashudhan Team",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",

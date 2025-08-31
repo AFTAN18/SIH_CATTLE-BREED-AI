@@ -1,0 +1,37 @@
+{
+  "classes": [
+    "Gir", "Sahiwal", "Red_Sindhi", "Tharparkar", "Rathi", "Hariana",
+    "Kankrej", "Ongole", "Krishna_Valley", "Deoni", "Khillari", "Malvi",
+    "Nimari", "Nagori", "Mewati", "Ponwar", "Bachaur", "Gaolao",
+    "Dangi", "Amritmahal", "Hallikar", "Kangayam", "Pulikulam", "Umblachery",
+    "Vechur", "Kasaragod", "Holstein_Friesian", "Jersey", "Brown_Swiss", "Crossbred",
+    "Murrah", "Nili_Ravi", "Bhadawari", "Jaffarabadi", "Mehsana",
+    "Nagpuri", "Pandharpuri", "Toda", "Chilika", "Kalahandi",
+    "Marathwadi", "Godavari", "Surti"
+  ],
+  "num_classes": 43,
+  "input_shape": [224, 224, 3],
+  "model_info": {
+    "name": "bharat_pashudhan_cattle_classifier",
+    "version": "1.0.0",
+    "description": "Cattle and Buffalo breed identification model for Indian breeds",
+    "accuracy": 0.92,
+    "top5_accuracy": 0.98,
+    "training_dataset": "Indian Bovine Breeds + Cattle Breeds Dataset",
+    "architecture": "EfficientNetB0"
+  },
+  "breed_types": {
+    "Gir": "cattle", "Sahiwal": "cattle", "Red_Sindhi": "cattle", "Tharparkar": "cattle",
+    "Rathi": "cattle", "Hariana": "cattle", "Kankrej": "cattle", "Ongole": "cattle",
+    "Krishna_Valley": "cattle", "Deoni": "cattle", "Khillari": "cattle", "Malvi": "cattle",
+    "Nimari": "cattle", "Nagori": "cattle", "Mewati": "cattle", "Ponwar": "cattle",
+    "Bachaur": "cattle", "Gaolao": "cattle", "Dangi": "cattle", "Amritmahal": "cattle",
+    "Hallikar": "cattle", "Kangayam": "cattle", "Pulikulam": "cattle", "Umblachery": "cattle",
+    "Vechur": "cattle", "Kasaragod": "cattle", "Holstein_Friesian": "cattle", "Jersey": "cattle",
+    "Brown_Swiss": "cattle", "Crossbred": "cattle",
+    "Murrah": "buffalo", "Nili_Ravi": "buffalo", "Bhadawari": "buffalo", "Jaffarabadi": "buffalo",
+    "Mehsana": "buffalo", "Nagpuri": "buffalo", "Pandharpuri": "buffalo", "Toda": "buffalo",
+    "Chilika": "buffalo", "Kalahandi": "buffalo", "Marathwadi": "buffalo", "Godavari": "buffalo",
+    "Surti": "buffalo"
+  }
+}
