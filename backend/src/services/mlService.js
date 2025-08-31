@@ -49,7 +49,7 @@ export class MLService {
       
       // Match against breed database
       const breedMatches = this.matchBreeds(relevantLabels);
-      
+
       return {
         success: true,
         primary_breed: breedMatches.primary,
@@ -95,7 +95,7 @@ export class MLService {
       .filter(([,score]) => score > 0);
     
     if (sortedBreeds.length === 0) {
-      return {
+    return {
         primary: 'unknown',
         confidence: 0,
         alternatives: []
