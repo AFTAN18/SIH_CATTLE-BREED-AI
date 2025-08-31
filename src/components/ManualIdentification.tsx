@@ -9,7 +9,7 @@ import {
   Search, 
   Filter, 
   Eye, 
-  Compare, 
+  GitCompare, 
   Camera, 
   MapPin, 
   Info,
@@ -208,7 +208,7 @@ const ManualIdentification: React.FC = () => {
             </p>
             {selectedBreeds.length > 0 && (
               <Button variant="outline" size="sm">
-                <Compare className="w-4 h-4 mr-2" />
+                <GitCompare className="w-4 h-4 mr-2" />
                 Compare ({selectedBreeds.length})
               </Button>
             )}
@@ -325,7 +325,7 @@ const ManualIdentification: React.FC = () => {
                 </div>
               ))}
               <Button className="w-full mt-3">
-                <Compare className="w-4 h-4 mr-2" />
+                <GitCompare className="w-4 h-4 mr-2" />
                 Compare Details
               </Button>
             </div>
