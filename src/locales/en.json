@@ -175,7 +175,7 @@
       "avoidShadows": "Avoid shadows on key identifying features",
       "position": "Position animal at least 3 meters away",
       "background": "Ensure background is clear and uncluttered"
-    }
+    },
     "cameraSettings": "Camera Settings",
     "resolution": "Resolution",
     "quality": "Quality",

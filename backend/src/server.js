@@ -31,7 +31,7 @@ import { initRedis } from './utils/redis.js';
 import { initQueue } from './utils/queue.js';
 
 // Import ML service
-import { initMLService } from './services/mlService.js';
+import { SimpleMLService } from './services/simpleMLService.js';
 
 // Load environment variables
 dotenv.config();
@@ -167,8 +167,8 @@ async function initializeServices() {
     logger.info('Queue system initialized successfully');
 
     // Initialize ML service
-    await initMLService();
-    logger.info('ML service initialized successfully');
+    logger.info('Simple ML service ready');
+    logger.info(`Available breeds: ${SimpleMLService.getAvailableBreeds().length}`);
 
   } catch (error) {
     logger.error('Failed to initialize services:', error);
