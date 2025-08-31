@@ -93,6 +93,46 @@ const LearningCenter = () => {
       icon: <Camera className="w-6 h-6" />
     },
     {
+      id: 'lighting-techniques',
+      title: 'Optimal Lighting for Cattle Photography',
+      description: 'Learn how to use natural and artificial lighting for clear breed identification photos',
+      duration: '8 min',
+      difficulty: 'beginner',
+      completed: false,
+      progress: 0,
+      icon: <Lightbulb className="w-6 h-6" />
+    },
+    {
+      id: 'animal-handling',
+      title: 'Safe Animal Handling Techniques',
+      description: 'Best practices for safely positioning animals for photography without stress',
+      duration: '18 min',
+      difficulty: 'intermediate',
+      completed: false,
+      progress: 25,
+      icon: <Users className="w-6 h-6" />
+    },
+    {
+      id: 'breed-characteristics',
+      title: 'Key Breed Characteristics Guide',
+      description: 'Comprehensive guide to identifying distinguishing features of Indian cattle breeds',
+      duration: '25 min',
+      difficulty: 'intermediate',
+      completed: false,
+      progress: 40,
+      icon: <BookOpen className="w-6 h-6" />
+    },
+    {
+      id: 'regional-variations',
+      title: 'Regional Breed Variations',
+      description: 'Understanding how environmental factors affect breed characteristics across regions',
+      duration: '20 min',
+      difficulty: 'advanced',
+      completed: false,
+      progress: 0,
+      icon: <MapPin className="w-6 h-6" />
+    },
+    {
       id: 'advanced-features',
       title: t('learning.advancedFeatures.title'),
       description: t('learning.advancedFeatures.description'),
@@ -101,6 +141,16 @@ const LearningCenter = () => {
       completed: false,
       progress: 0,
       icon: <Target className="w-6 h-6" />
+    },
+    {
+      id: 'data-accuracy',
+      title: 'Ensuring Data Accuracy & Quality',
+      description: 'Methods to validate identification results and maintain high accuracy standards',
+      duration: '15 min',
+      difficulty: 'advanced',
+      completed: false,
+      progress: 0,
+      icon: <BarChart3 className="w-6 h-6" />
     }
   ];
 
@@ -111,20 +161,20 @@ const LearningCenter = () => {
       type: 'cattle',
       region: 'Gujarat',
       characteristics: [
-        t('learning.breeds.gir.characteristics.hump'),
-        t('learning.breeds.gir.characteristics.ears'),
-        t('learning.breeds.gir.characteristics.color'),
-        t('learning.breeds.gir.characteristics.size')
+        'Prominent forehead hump',
+        'Long pendulous ears',
+        'White to light red coat color',
+        'Medium to large size (400-500kg)'
       ],
       bestPractices: [
-        t('learning.breeds.gir.practices.lighting'),
-        t('learning.breeds.gir.practices.angle'),
-        t('learning.breeds.gir.practices.distance')
+        'Capture side profile to show hump clearly',
+        'Use natural lighting to highlight coat patterns',
+        'Maintain 3-4 meter distance for full body shots'
       ],
       commonMistakes: [
-        t('learning.breeds.gir.mistakes.shadow'),
-        t('learning.breeds.gir.mistakes.angle'),
-        t('learning.breeds.gir.mistakes.lighting')
+        'Photographing in harsh shadows',
+        'Too close angle missing body proportions',
+        'Poor lighting obscuring coat color'
       ],
       imageUrl: '/images/breeds/gir.jpg'
     },
@@ -134,20 +184,20 @@ const LearningCenter = () => {
       type: 'cattle',
       region: 'Punjab',
       characteristics: [
-        t('learning.breeds.sahiwal.characteristics.color'),
-        t('learning.breeds.sahiwal.characteristics.size'),
-        t('learning.breeds.sahiwal.characteristics.temperament'),
-        t('learning.breeds.sahiwal.characteristics.adaptation')
+        'Reddish brown to light red color',
+        'Medium to large size',
+        'Docile temperament',
+        'Heat tolerant breed'
       ],
       bestPractices: [
-        t('learning.breeds.sahiwal.practices.background'),
-        t('learning.breeds.sahiwal.practices.lighting'),
-        t('learning.breeds.sahiwal.practices.position')
+        'Use neutral background to highlight color',
+        'Soft even lighting for accurate color capture',
+        'Position animal in comfortable stance'
       ],
       commonMistakes: [
-        t('learning.breeds.sahiwal.mistakes.background'),
-        t('learning.breeds.sahiwal.mistakes.lighting'),
-        t('learning.breeds.sahiwal.mistakes.angle')
+        'Busy background distracting from animal',
+        'Harsh lighting altering color perception',
+        'Awkward animal positioning'
       ],
       imageUrl: '/images/breeds/sahiwal.jpg'
     },
@@ -157,22 +207,91 @@ const LearningCenter = () => {
       type: 'buffalo',
       region: 'Haryana',
       characteristics: [
-        t('learning.breeds.murrah.characteristics.color'),
-        t('learning.breeds.murrah.characteristics.horns'),
-        t('learning.breeds.murrah.characteristics.size'),
-        t('learning.breeds.murrah.characteristics.yield')
+        'Jet black coat color',
+        'Curved horns pointing backward',
+        'Large size (500-800kg)',
+        'High milk yield capacity'
       ],
       bestPractices: [
-        t('learning.breeds.murrah.practices.lighting'),
-        t('learning.breeds.murrah.practices.angle'),
-        t('learning.breeds.murrah.practices.background')
+        'Use adequate lighting for dark coat',
+        'Capture horn shape and curvature',
+        'Show body size and proportions'
       ],
       commonMistakes: [
-        t('learning.breeds.murrah.mistakes.lighting'),
-        t('learning.breeds.murrah.mistakes.angle'),
-        t('learning.breeds.murrah.mistakes.background')
+        'Insufficient lighting for black coat',
+        'Missing horn details in photos',
+        'Poor angle hiding body structure'
       ],
       imageUrl: '/images/breeds/murrah.jpg'
+    },
+    {
+      id: 'holstein',
+      name: 'Holstein Friesian',
+      type: 'cattle',
+      region: 'Imported/Crossbred',
+      characteristics: [
+        'Black and white patches',
+        'Large body size',
+        'High milk production',
+        'Distinctive color pattern'
+      ],
+      bestPractices: [
+        'Capture clear patch patterns',
+        'Use good contrast lighting',
+        'Show full body proportions'
+      ],
+      commonMistakes: [
+        'Poor contrast hiding patterns',
+        'Incomplete body coverage',
+        'Overexposed white patches'
+      ],
+      imageUrl: '/images/breeds/holstein.jpg'
+    },
+    {
+      id: 'red-sindhi',
+      name: 'Red Sindhi',
+      type: 'cattle',
+      region: 'Sindh/Rajasthan',
+      characteristics: [
+        'Deep red coat color',
+        'Compact body structure',
+        'Heat resistant',
+        'Good milk quality'
+      ],
+      bestPractices: [
+        'Capture true red color tone',
+        'Show compact body structure',
+        'Use natural lighting'
+      ],
+      commonMistakes: [
+        'Color distortion in photos',
+        'Missing body proportion details',
+        'Artificial lighting effects'
+      ],
+      imageUrl: '/images/breeds/red-sindhi.jpg'
+    },
+    {
+      id: 'nili-ravi',
+      name: 'Nili Ravi',
+      type: 'buffalo',
+      region: 'Punjab/Pakistan',
+      characteristics: [
+        'Dark coat with white markings',
+        'Large curved horns',
+        'Wall eyes (blue eyes)',
+        'High milk production'
+      ],
+      bestPractices: [
+        'Capture eye color clearly',
+        'Show white markings pattern',
+        'Highlight horn structure'
+      ],
+      commonMistakes: [
+        'Missing eye color details',
+        'Poor marking visibility',
+        'Unclear horn photography'
+      ],
+      imageUrl: '/images/breeds/nili-ravi.jpg'
     }
   ];
 

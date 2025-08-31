@@ -303,7 +303,7 @@ const Dashboard = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center justify-between p-3 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{item.image}</span>
@@ -324,47 +324,47 @@ const Dashboard = () => {
                     )}
                   </div>
                 </motion.div>
-              ))}
-              
-              <Button variant="outline" className="w-full">
-                {t('dashboard.viewAllHistory')}
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
+            ))}
+            
+            <Button variant="outline" className="w-full">
+              {t('dashboard.viewAllHistory')}
+            </Button>
+          </CardContent>
+        </Card>
+      </motion.div>
 
-        {/* Achievements */}
-        <motion.div variants={cardVariants}>
-          <Card className="shadow-soft border-0">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-primary" />
-                {t('dashboard.achievements')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-3">
-                {achievements.map((achievement) => (
-                  <motion.div
-                    key={achievement.id}
-                    whileHover={{ scale: 1.05 }}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      achievement.unlocked 
-                        ? 'border-success bg-success/10' 
-                        : 'border-muted bg-muted/30 opacity-50'
-                    }`}
-                  >
-                    <div className="text-center">
-                      <span className="text-2xl">{achievement.icon}</span>
-                      <p className="font-medium text-sm mt-1">{achievement.title}</p>
-                      <p className="text-xs text-muted-foreground">{achievement.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+      {/* Achievements */}
+      <motion.div variants={cardVariants}>
+        <Card className="shadow-soft border-0">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-primary" />
+              {t('dashboard.achievements')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-3">
+              {achievements.map((achievement) => (
+                <motion.div
+                  key={achievement.id}
+                  whileHover={{ scale: 1.05 }}
+                  className={`p-3 rounded-lg border-2 transition-all ${
+                    achievement.unlocked 
+                      ? 'border-success bg-success/10' 
+                      : 'border-muted bg-muted/30 opacity-50'
+                  }`}
+                >
+                  <div className="text-center">
+                    <span className="text-2xl">{achievement.icon}</span>
+                    <p className="font-medium text-sm mt-1">{achievement.title}</p>
+                    <p className="text-xs text-muted-foreground">{achievement.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
         {/* Learning Resources */}
         <motion.div variants={cardVariants}>
@@ -410,6 +410,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </motion.div>
+
       </div>
 
       {/* Bottom padding for safe area */}

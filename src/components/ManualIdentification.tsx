@@ -51,55 +51,219 @@ const ManualIdentification: React.FC = () => {
 
   useEffect(() => {
     const initializeBreedData = () => {
-      const allBreeds: BreedComparisonData[] = [
-        ...BREED_DATABASE.cattle.map(breed => ({
-          name: breed.name,
-          category: 'cattle' as const,
-          region: breed.region,
-          characteristics: breed.characteristics,
+      const enhancedBreeds: BreedComparisonData[] = [
+        // Enhanced Cattle Breeds
+        {
+          name: 'Gir',
+          category: 'cattle',
+          region: 'Gujarat',
+          characteristics: [
+            'Prominent forehead hump',
+            'Long pendulous ears',
+            'White to light red coat with patches',
+            'Curved horns pointing backward',
+            'Medium to large size (400-500kg)'
+          ],
           physicalTraits: {
-            size: 'Medium to Large',
-            color: breed.characteristics.find(c => c.includes('coat') || c.includes('color')) || 'Variable',
-            horns: 'Curved',
-            ears: 'Medium',
-            hump: 'Present'
+            size: 'Medium to Large (400-500kg)',
+            color: 'White to light red with patches',
+            horns: 'Curved, pointing backward',
+            ears: 'Long and pendulous',
+            hump: 'Prominent forehead hump'
           },
           identificationTips: [
-            `Focus on ${breed.characteristics[0].toLowerCase()}`,
-            `Look for ${breed.characteristics[1].toLowerCase()}`,
-            `Check ${breed.characteristics[2].toLowerCase()}`
+            'Look for the distinctive forehead hump',
+            'Check for long, drooping ears',
+            'Observe the white to reddish coat pattern',
+            'Note the curved horn shape'
           ],
           commonMistakes: [
-            'Confusing with similar breeds',
-            'Poor lighting conditions',
-            'Incorrect angle'
+            'Confusing with Kankrej due to similar hump',
+            'Misidentifying ear length in poor angles',
+            'Color variations in different lighting'
           ]
-        })),
-        ...BREED_DATABASE.buffalo.map(breed => ({
-          name: breed.name,
-          category: 'buffalo' as const,
-          region: breed.region,
-          characteristics: breed.characteristics,
+        },
+        {
+          name: 'Sahiwal',
+          category: 'cattle',
+          region: 'Punjab',
+          characteristics: [
+            'Reddish brown to light red coat',
+            'Medium to large size',
+            'Loose skin with dewlap',
+            'Short horns',
+            'Docile temperament'
+          ],
           physicalTraits: {
-            size: 'Large',
-            color: breed.characteristics.find(c => c.includes('coat') || c.includes('color')) || 'Dark',
-            horns: 'Curved',
-            ears: 'Small'
+            size: 'Medium to Large (350-450kg)',
+            color: 'Reddish brown to light red',
+            horns: 'Short and thick',
+            ears: 'Medium sized',
+            hump: 'Small to medium'
           },
           identificationTips: [
-            `Focus on ${breed.characteristics[0].toLowerCase()}`,
-            `Look for ${breed.characteristics[1].toLowerCase()}`,
-            `Check ${breed.characteristics[2].toLowerCase()}`
+            'Focus on the reddish-brown coat color',
+            'Look for loose skin and prominent dewlap',
+            'Check for short, thick horns',
+            'Note the calm, docile behavior'
           ],
           commonMistakes: [
-            'Confusing with cattle',
-            'Misidentifying horn shape',
-            'Regional variations'
+            'Confusing with Red Sindhi breed',
+            'Misidentifying horn size',
+            'Color variations due to age'
           ]
-        }))
+        },
+        {
+          name: 'Holstein Friesian',
+          category: 'cattle',
+          region: 'Imported/Crossbred',
+          characteristics: [
+            'Distinctive black and white patches',
+            'Large body size',
+            'High milk production',
+            'No hump',
+            'Straight back line'
+          ],
+          physicalTraits: {
+            size: 'Large (500-700kg)',
+            color: 'Black and white patches',
+            horns: 'Small or dehorned',
+            ears: 'Medium, alert',
+            hump: 'Absent'
+          },
+          identificationTips: [
+            'Look for clear black and white patch patterns',
+            'Note the large body size and straight back',
+            'Check for absence of hump',
+            'Observe the alert ear position'
+          ],
+          commonMistakes: [
+            'Confusing with other crossbred cattle',
+            'Missing subtle color variations',
+            'Assuming all black-white cattle are Holstein'
+          ]
+        },
+        {
+          name: 'Red Sindhi',
+          category: 'cattle',
+          region: 'Sindh/Rajasthan',
+          characteristics: [
+            'Deep red coat color',
+            'Compact body structure',
+            'Small to medium hump',
+            'Heat resistant',
+            'Good milk quality'
+          ],
+          physicalTraits: {
+            size: 'Medium (300-400kg)',
+            color: 'Deep red to dark red',
+            horns: 'Small, curved',
+            ears: 'Medium, mobile',
+            hump: 'Small to medium'
+          },
+          identificationTips: [
+            'Focus on the uniform deep red color',
+            'Note the compact, well-proportioned body',
+            'Check for small to medium hump size',
+            'Look for heat adaptation features'
+          ],
+          commonMistakes: [
+            'Confusing with Sahiwal breed',
+            'Misidentifying due to sun-faded coat',
+            'Overlooking regional size variations'
+          ]
+        },
+        // Enhanced Buffalo Breeds
+        {
+          name: 'Murrah',
+          category: 'buffalo',
+          region: 'Haryana',
+          characteristics: [
+            'Jet black coat color',
+            'Curved horns pointing backward',
+            'Large body size',
+            'High milk yield',
+            'Compact udder'
+          ],
+          physicalTraits: {
+            size: 'Large (500-800kg)',
+            color: 'Jet black',
+            horns: 'Curved, pointing backward and inward',
+            ears: 'Small, alert'
+          },
+          identificationTips: [
+            'Look for the jet black coat color',
+            'Note the distinctive horn curvature',
+            'Check for large body size and weight',
+            'Observe the compact, well-formed udder'
+          ],
+          commonMistakes: [
+            'Confusing with other black buffalo breeds',
+            'Misidentifying horn curvature angle',
+            'Overlooking size differences'
+          ]
+        },
+        {
+          name: 'Nili Ravi',
+          category: 'buffalo',
+          region: 'Punjab',
+          characteristics: [
+            'Dark coat with white markings',
+            'Large curved horns',
+            'Wall eyes (blue/white eyes)',
+            'High milk production',
+            'Large body frame'
+          ],
+          physicalTraits: {
+            size: 'Large (450-750kg)',
+            color: 'Dark with white markings on face and legs',
+            horns: 'Large, curved',
+            ears: 'Medium, mobile'
+          },
+          identificationTips: [
+            'Look for distinctive white markings on dark coat',
+            'Check for wall eyes (blue or white eyes)',
+            'Note the large, curved horn structure',
+            'Observe the substantial body frame'
+          ],
+          commonMistakes: [
+            'Missing the wall eye characteristic',
+            'Confusing markings with other breeds',
+            'Misidentifying horn size'
+          ]
+        },
+        {
+          name: 'Bhadawari',
+          category: 'buffalo',
+          region: 'Uttar Pradesh',
+          characteristics: [
+            'Light to dark brown coat',
+            'Compact body size',
+            'Straight or slightly curved horns',
+            'Good heat tolerance',
+            'Moderate milk yield'
+          ],
+          physicalTraits: {
+            size: 'Medium (350-500kg)',
+            color: 'Light to dark brown',
+            horns: 'Straight to slightly curved',
+            ears: 'Medium sized'
+          },
+          identificationTips: [
+            'Focus on the brown coat coloration',
+            'Note the compact, sturdy build',
+            'Check for straight to slightly curved horns',
+            'Look for heat adaptation features'
+          ],
+          commonMistakes: [
+            'Confusing with cattle due to color',
+            'Misidentifying horn straightness',
+            'Overlooking size differences'
+          ]
+        }
       ];
       
-      setBreedData(allBreeds);
+      setBreedData(enhancedBreeds);
     };
 
     initializeBreedData();
